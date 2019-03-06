@@ -164,7 +164,7 @@
           item.addEventListener("keydown", function(){
           var upper = document.querySelector(".upper").value;
           var lower = document.querySelector(".lower").value;
-          document.querySelector(".today-date").innerHTML = Math.round((Math.random() * upper + (lower+1)))
+          document.querySelector(".today-date").innerHTML = Math.ceil((Math.random() * upper + (lower+1)))
         })
         })
         
