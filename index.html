@@ -14,19 +14,27 @@
       box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
       flex-direction: column;
+      padding: 0px;
+      margin: 0px;
     }
 
     #input{
       max-width: 800px;
       width: 100%;
       padding: 8px;
+      overflow: auto;
+      box-sizing: border-box;
+      padding-top: 80px;
+
     }
 
     h1{
-      font-size: 4em;
+      font-size: 6em;
       font-weight: 800;
       display: inline;
       background: linear-gradient(50deg, rgb(230, 148, 0), rgb(208, 34, 85));
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      line-height: 1;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -37,6 +45,8 @@
       appearance: none;
       font-size: inherit;
       font-weight: inherit;
+      font-family: inherit;
+      line-height: inherit;
       width: 200px;
 
       background: linear-gradient(50deg, rgb(230, 148, 0), rgb(208, 34, 85));
