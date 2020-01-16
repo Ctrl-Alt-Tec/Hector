@@ -146,9 +146,9 @@
       let ind = upperBound-lowerBound; 
 
       if(nums.length<ind){
-        let rand = Math.floor(Math.random() * upperBound) + lowerBound;
+        let rand = Math.floor(Math.random() * (upperBound-1)) + lowerBound;
         while (nums.includes(rand) && nums.length <= ind) {
-          rand = Math.floor(Math.random() * upperBound) + lowerBound;
+          rand = Math.floor(Math.random() * (upperBound-1)) + lowerBound;
         }
         nums.push(rand); 
         showHistory()
