@@ -145,18 +145,21 @@
       let upperBound = Number(document.querySelector("#upperBound").value) + 1; //:D nailed it 
       let ind = upperBound-lowerBound; 
 
-      let rand = Math.floor(Math.random() * upperBound) + lowerBound;
-      
-      while (nums.includes(rand) && nums.length <= ind) {
-        rand = Math.floor(Math.random() * upperBound) + lowerBound;
+      if(nums.length<ind){
+        let rand = Math.floor(Math.random() * upperBound) + lowerBound;
+        while (nums.includes(rand) && nums.length <= ind) {
+          rand = Math.floor(Math.random() * upperBound) + lowerBound;
+        }
+        nums.push(rand); 
+        showHistory()
+        document.querySelector("#generated").innerHTML = rand;
+        document.querySelector("#generated").style.display="flex" 
+      } else {
+        if(confirm("All numbers have been generated.\nRefresh?")){
+          window.location.reload();
+        }
       }
-
-
       
-      nums.push(rand); 
-      showHistory()
-      document.querySelector("#generated").innerHTML = rand;
-      document.querySelector("#generated").style.display="flex"
     });
     // Ocultar el número aleatorio al hacer click 
     document.querySelector("#generated").addEventListener("click", function(){
