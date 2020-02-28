@@ -21,7 +21,7 @@
 
     #input{
       max-width: 800px;
-      width: 100%;
+      width: 90%;
       padding: 8px;
       overflow: auto;
       box-sizing: border-box;
@@ -30,7 +30,7 @@
     }
 
     h1{
-      font-size: 6em;
+      font-size: 5em;
       font-weight: 800;
       display: inline;
       background: linear-gradient(50deg, rgb(230, 148, 0), rgb(208, 34, 85));
@@ -65,8 +65,6 @@
       box-sizing: border-box;
       cursor: pointer;
     }
-
-
     #generated{
       width: 100vw;
       height: 100vh;
@@ -81,8 +79,9 @@
       -webkit-backdrop-filter: blur(10px);
       background: rgba(255,255,255,0.8);
     }
-
-
+    #history{
+      color: white;
+    }
     #header{
       width: 100%;
       position: fixed; 
@@ -94,38 +93,135 @@
     #header img{
       height: 100%; 
     }
+    #footer{
+      text-align: center;
+    }
+    .footerst{
+      color: white; 
+      font-weight: 900;
+    }
+    .contact{
+      color: white; 
+      font-weight: 400;
+      font-size: small;
+    }
+
+    #eventAd{
+      margin: 16px;
+      padding: 16px;
+      border: 1px solid;
+      border-radius: 8px;
+      color: rgba(255,255,255,0.5);
+    }
+    #eventAd * {
+      margin: 0
+    }
+
   </style>
 </head>
 <body>
   <div id="header">
     <img src="https://ctrl-alt-tec.hackclub.com/img/LOGO-INLINE.png" alt="">
+    <img src="good.png">
   </div>
+
+  <div id="eventAd">
+
+  </div>
+
   <div id="input">
     <h1>Give me a random number between <input type="number" id="lowerBound" placeholder="0"> and <input type="number" id="upperBound" placeholder="0">...
     </h1>
 
-    <div id="button">GENERATE</div>
+    <div id="button">GENERATE</div> 
+    
 
   </div>
 
   <div id="generated">9</div>
+  
+  <div id="history">
+    <!--Aquí se van a ver los números que ya salieron :D-->
+  </div>
+
+  <div id="footer">
+      <p class="footerst">Made with <span style="color:rgb(230, 148, 0); font-size: larger; font-weight: 800;">&#9829;</span>  by Ctrl Alt Tec ( and Mango &#129389;)</p>
+      <p class="contact">Good luck! If there's a problem with the generator, please send us an email to <a class="contact" href="mailto:contact@ctrlalttec.hackclub.com?Subject=Hello" target="_top">contact@ctrlalttec.hackclub.com</a></p>
+  </div>
 
   <script>
+
+      
+    // Aquí se almacenarán los números randoms.
+    let nums = []; //
+    // Generar un numero aleatorio  
     document.querySelector("#button").addEventListener("click", function(){
+      
       let lowerBound = Number(document.querySelector("#lowerBound").value);
-      let upperBound = Number(document.querySelector("#upperBound").value);
+      let upperBound = Number(document.querySelector("#upperBound").value) + 1; //:D nailed it 
+      let ind = upperBound-lowerBound; 
+
+      if(nums.length<ind){
+        let rand = Math.floor(Math.random() * (upperBound-1)) + lowerBound;
+        while (nums.includes(rand) && nums.length <= ind) {
+          rand = Math.floor(Math.random() * (upperBound-1)) + lowerBound;
+        }
+        nums.push(rand); 
+        showHistory()
+        document.querySelector("#generated").innerHTML = rand;
+        document.querySelector("#generated").style.display="flex" 
+      } else {
+        if(confirm("All numbers have been generated.\nRefresh?")){
+          window.location.reload();
+        }
+      }
+      
+    });
+    // Ocultar el número aleatorio al hacer click 
+    document.querySelector("#generated").addEventListener("click", function(){
+      document.querySelector("#generated").style.display="none"
+    });
+
+
+    function showHistory(){
+      let historyCont = document.querySelector("#history");
+      //Vaciar
+      historyCont.innerHTML = JSON.stringify(nums);
+    }
+
+    fetch('https://ctrl-alt-tec.hackclub.com/event/event.json').then(data=>data.json()).then(data=>{
+      console.log(data)
+      let eventTitle = document.createElement("h2");
+      eventTitle.innerText = data.title;
+      let eventSubtitle = document.createElement("h3");
+      eventSubtitle.innerText = data.subtitle;
+
+      let eventDetails = document.createElement('div');
+      eventDetails.innerText = `${data.date}, ${data.time}`;
+
+      document.querySelector("#eventAd").append(eventTitle, eventSubtitle, eventDetails)
+      document.querySelector("#eventAd").addEventListener('click', ()=>{
+        window.location.href = "https://ctrl-alt-tec.hackclub.com/event"
+      })
+
+    })
+
+    /* old news:
+    document.querySelector("#button2").addEventListener("click", function(){  
       let rand = Math.floor(Math.random() * upperBound) + lowerBound;
+      while(nums[rand] == true){
+        let rand = Math.floor(Math.random() * upperBound) + lowerBound;
+      }
+      nums[rand] = true;
       document.querySelector("#generated").innerHTML = rand;
       document.querySelector("#generated").style.display="flex"
     })
     document.querySelector("#generated").addEventListener("click", function(){
       document.querySelector("#generated").style.display="none"
     })
+    */
 
-
-    fetch('https://ctrl-alt-tec.hackclub.com/event/event.json').then(data=>data.json()).then(data=>{
-      console.log(data)
-    })
+    
 
   </script>
 </body>
