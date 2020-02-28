@@ -121,6 +121,12 @@
     document.querySelector("#generated").addEventListener("click", function(){
       document.querySelector("#generated").style.display="none"
     })
+
+
+    fetch('https://ctrl-alt-tec.hackclub.com/event/event.json').then(data=>data.json()).then(data=>{
+      console.log(data)
+    })
+
   </script>
 </body>
 </html>
